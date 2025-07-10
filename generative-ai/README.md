@@ -2,6 +2,8 @@
 
 This document explains how you can use Agentic AI tools to create workflows and interact with the [AWS HealthOmics](https://docs.aws.amazon.com/omics/latest/dev/what-is-healthomics.html) service using natural language prompts.
 
+A tutoral is [also available](README-MCP.md) on using Q Developer CLI with the AWS HealthOmics MCP server
+
 ## What is Amazon Q Developer CLI
 [Amazon Q Developer](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html) for command line (Amazon Q Developer CLI) is a powerful agentic AI tool that can perform many actions including generating code and interacting with AWS and other command line tools on your machine to acheive complex tasks. Amazon Q for command line integrates contextual information, providing Amazon Q with an enhanced understanding of your use case, enabling it to provide relevant and context-aware responses. As you begin typing, Amazon Q populates contextually relevant subcommands, options, and arguments.
 

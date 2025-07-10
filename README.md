@@ -21,6 +21,7 @@ The quickest setup to run example notebooks includes:
 ## Tutorials
 ### Generative AI
 * [Rapidly generate and run and analyze](./generative-ai/README.md) workflows using natural langauge prompts and Amazon Q Developer CLI.
+* [Using Agentic AI and MCP](./generative-ai/README-MCP.md) for natural language interactions with AWS HealthOmics.
 ### Storage
 * [Using HealthOmics Storage with genomics references and readsets](./notebooks/200-omics_storage.ipynb): Get acquainted with HealthOmics storage by creating reference and sequence stores, importing data from FASTQ and CRAM files, and downloading readsets.
 ### Workflows

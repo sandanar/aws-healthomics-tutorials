@@ -345,6 +345,19 @@ The following are some examples of prompts you can use. Many more are possible.
 
 - _"Help me create a new genomic variant calling workflow"_
 
+### Complex Workflow Developement:
+
+- _"I want to build a workflow to detect gene fusions in sequence data. I want you to develop a specification for this workflow. Ask me one question at a time until you have a clear understanding of what the workflow will do and then write the
+  specification to SPEC.md"_
+  
+  **then**
+  
+- _"Develop a todo list to realize the specification outlined in SPEC.md, write the list to TASKS.md"_
+
+  **then**
+  
+-  _"One at a time, implement and test each task in TASKS.md. Only move to the next task when the current task is complete, tested and commited to git. When tasks are complete, check them off in the TASKS.md"_
+
 ### Production Execution:
 
 - _"Run my alignment workflow on these FASTQ files"_

@@ -115,7 +115,7 @@ aws ecr put-registry-policy \
 
 ### Docker Hub Template
 ```bash
-aws ecr put-repository-creation-template \
+aws ecr create-repository-creation-template \
     --prefix docker-hub \
     --applied-for PULL_THROUGH_CACHE \
     --repository-policy '{
@@ -140,7 +140,7 @@ aws ecr put-repository-creation-template \
 
 ### Quay.io Template
 ```bash
-aws ecr put-repository-creation-template \
+aws ecr create-repository-creation-template \
     --prefix quay \
     --applied-for PULL_THROUGH_CACHE \
     --repository-policy '{
@@ -165,7 +165,7 @@ aws ecr put-repository-creation-template \
 
 ### ECR Public Template
 ```bash
-aws ecr put-repository-creation-template \
+aws ecr create-repository-creation-template \
     --prefix ecr-public \
     --applied-for PULL_THROUGH_CACHE \
     --repository-policy '{

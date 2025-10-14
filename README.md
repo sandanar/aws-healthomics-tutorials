@@ -27,7 +27,7 @@ The quickest setup to run example notebooks includes:
 ### Workflows
 * [Running WDL and Nextflow pipelines with HealthOmics Workflows](./notebooks/200-omics_workflows.ipynb): Learn how to create, run, and debug WDL and Nextflow based pipelines that process data from HealthOmics Storage and Amazon S3 using HealthOmics Workflows.
 ### Analytics
-* [Querying annotations and variants with HealthOmics Analytics](./notebooks/200-omics_analytics.ipynb): Get started with HealthOmics Analytics by importing variant and annotation data from VCF, TSV, and GFF files, and performing genome scale analysis queries using Amazon Athena.
+* [Create S3Table bucket tables and import VCF and GVCF files](./variant-database/): Setup S3Table bucket tables to hold variant data and import variant data into a iceberg data warehouse suitable for integration with AWS analytics tools such as Athena, Redshift, EMR and others.
 
 ## License
 

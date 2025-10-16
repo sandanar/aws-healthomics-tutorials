@@ -11,6 +11,8 @@ import pyarrow as pa
 from pyiceberg.exceptions import NoSuchTableError
 from utils import load_s3_tables_catalog, retry_operation
 import gzip
+import boto3
+from io import TextIOWrapper
 
 # Configuration
 NAMESPACE = "variant_db_3"
@@ -46,11 +48,30 @@ def get_table():
 
 
 def open_vcf_file(file_path):
-    """Open a VCF file, handling gzipped files automatically."""
-    if file_path.endswith('.gz'):
-        return gzip.open(file_path, 'rt')
+    """Open a VCF file, handling both local files and S3 URIs, with gzip support."""
+    if file_path.startswith('s3://'):
+        # Parse S3 URI
+        s3_parts = file_path[5:].split('/', 1)
+        bucket = s3_parts[0]
+        key = s3_parts[1]
+        
+        # Create S3 client
+        s3_client = boto3.client('s3')
+        
+        # Get the object
+        response = s3_client.get_object(Bucket=bucket, Key=key)
+        
+        # Handle gzipped files
+        if file_path.endswith('.gz'):
+            return TextIOWrapper(gzip.GzipFile(fileobj=response['Body']))
+        else:
+            return TextIOWrapper(response['Body'])
     else:
-        return open(file_path, 'r')
+        # Local file handling (original logic)
+        if file_path.endswith('.gz'):
+            return gzip.open(file_path, 'rt')
+        else:
+            return open(file_path, 'r')
 
 
 def parse_vcf_header(vcf_file):
@@ -378,8 +399,24 @@ def main():
 
     # Process each VCF file
     for vcf_file in args.vcf_files:
-        if not os.path.exists(vcf_file):
-            print(f"Error: File not found: {vcf_file}")
+        # Check file existence for both local and S3 files
+        file_exists = True
+        if vcf_file.startswith('s3://'):
+            try:
+                s3_parts = vcf_file[5:].split('/', 1)
+                bucket = s3_parts[0]
+                key = s3_parts[1]
+                s3_client = boto3.client('s3')
+                s3_client.head_object(Bucket=bucket, Key=key)
+            except Exception as e:
+                file_exists = False
+                print(f"Error: S3 file not found: {vcf_file} - {e}")
+        else:
+            file_exists = os.path.exists(vcf_file)
+            if not file_exists:
+                print(f"Error: Local file not found: {vcf_file}")
+        
+        if not file_exists:
             continue
 
         try:

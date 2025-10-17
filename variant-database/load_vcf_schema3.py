@@ -20,6 +20,28 @@ TABLE_NAME = "genomic_variants"
 BATCH_SIZE = 100000  # Number of records to process before writing to the table
 
 
+def parse_s3_uri(s3_uri):
+    """Parse S3 URI and return bucket and key.
+    
+    Args:
+        s3_uri (str): S3 URI in format s3://bucket/key
+        
+    Returns:
+        tuple: (bucket, key)
+        
+    Raises:
+        ValueError: If URI is invalid or missing parts
+    """
+    if not s3_uri.startswith('s3://'):
+        raise ValueError(f"Invalid S3 URI format: {s3_uri}")
+    
+    s3_parts = s3_uri[5:].split('/', 1)
+    if len(s3_parts) != 2 or not s3_parts[0] or not s3_parts[1]:
+        raise ValueError(f"Invalid S3 URI - missing bucket or key: {s3_uri}")
+    
+    return s3_parts[0], s3_parts[1]
+
+
 def get_table():
     """Get the existing table or fail if it doesn't exist."""
     # Load the catalog using the utility function
@@ -51,9 +73,7 @@ def open_vcf_file(file_path):
     """Open a VCF file, handling both local files and S3 URIs, with gzip support."""
     if file_path.startswith('s3://'):
         # Parse S3 URI
-        s3_parts = file_path[5:].split('/', 1)
-        bucket = s3_parts[0]
-        key = s3_parts[1]
+        bucket, key = parse_s3_uri(file_path)
         
         # Create S3 client
         s3_client = boto3.client('s3')
@@ -403,9 +423,7 @@ def main():
         file_exists = True
         if vcf_file.startswith('s3://'):
             try:
-                s3_parts = vcf_file[5:].split('/', 1)
-                bucket = s3_parts[0]
-                key = s3_parts[1]
+                bucket, key = parse_s3_uri(vcf_file)
                 s3_client = boto3.client('s3')
                 s3_client.head_object(Bucket=bucket, Key=key)
             except Exception as e:

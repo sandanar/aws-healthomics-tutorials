@@ -33,7 +33,7 @@ def parse_s3_uri(s3_uri):
         ValueError: If URI is invalid or missing parts
     """
     if not s3_uri.startswith('s3://'):
-        raise ValueError(f"Invalid S3 URI format: {s3_uri}")
+        raise ValueError(f"Invalid S3 URI format: {s3_uri}. URIs must begin with s3://")
     
     s3_parts = s3_uri[5:].split('/', 1)
     if len(s3_parts) != 2 or not s3_parts[0] or not s3_parts[1]:

@@ -1,6 +1,9 @@
 .ipynb_checkpoints/
 .vscode
 
+# macOS
+.DS_Store
+
 # Python artifacts
 __pycache__/
 *.py[cod]
